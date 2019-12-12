@@ -1,51 +1,51 @@
 library(shiny)
 library(shinycssloaders)
 library(shinythemes)
+library(shinyWidgets)
 
+arr = c("9", "8", "7", "6", "5", "4", "3", "2", "1", "2", "3", "4", "5", "6", "7", "8", "9")
 navbarPage("Analytical Hierarchy Process",
            theme = shinytheme("cerulean"),
-           tabPanel("Susunan Hierarki",
+           tabPanel("Tambah Pakar",
                     fluidRow(
                       column(4,
-                             textInput("criteria", "Tambah Kriteria:"),
-                             actionButton("addCriteria", "Tambahkan", class = "btn-primary"),
-                             br(),
-                             br(),
-                             htmlOutput("outputCriteria")
+                             textInput("namaPakar", "Nama Pakar:"),
+                             textInput("jabatanPakar", "Jabatan Pakar:"),
+                             actionButton("addPakar", "Tambahkan", class = "btn-primary"),
+                             verbatimTextOutput("outputCriteria")
                       ),
-                      column(4,
-                             textInput("subcriteria", "Tambah Sub-Kriteria:"),
-                             selectInput("sub-c", "Pilih Kriteria",
-                                         c("Typical angina" = 1,
-                                           "Atypical angina" = 2,
-                                           "Non-anginal pain" = 3,
-                                           "Asymptomatic" = 4
-                                         )),
-                             actionButton("addSubCriteria", "Tambahkan", class = "btn-primary") 
-                      ),
-                      column(4,
-                             textInput("alternative", "Tambah Alternatif:"),
-                             actionButton("addAlternative", "Tambahkan", class = "btn-primary") 
+                      column(6,
+                             DT::dataTableOutput("responses", width = 500)
                       )
                     )   
            ),
            tabPanel("Tambah Record",
+                    sidebarPanel(
+                      selectInput('comparison', 'Pilih Pakar', names(iris)),
+                      selectInput('comparison', 'Pilih Perbandingan', names(iris))
+                    ),
                     mainPanel(
-                      h3('Pakar'),
-                      textInput("criteria", "Nama Pakar:"),
-                      h3('Perbandingan'),
-                      sliderInput("range", 
-                                  label = "Kriteria 1 vs Kriteria 2",
-                                  -9, 9, value = 0, step = 1),
-                      sliderInput("range", 
-                                  label = "Kriteria 2 vs Kriteria 3",
-                                  -9, 9, value = 0, step = 1),
-                      sliderInput("range", 
-                                  label = "Kriteria 1 vs Kriteria 3",
-                                  -9, 9, value = 0, step = 1),
+                      sliderTextInput(
+                        inputId = "slider1",
+                        label = "Kriteria 1 vs Kriteria 2",
+                        choices = arr,
+                        selected = arr[9]
+                      ),
+                      sliderTextInput(
+                        inputId = "slider2",
+                        label = "Kriteria 2 vs Kriteria 3",
+                        choices = arr,
+                        selected = arr[9]
+                      ),
+                      sliderTextInput(
+                        inputId = "slider3",
+                        label = "Kriteria 1 vs Kriteria 3",
+                        choices = arr,
+                        selected = arr[9]
+                      ),
                       actionButton("addRecord", "Tambahkan Record", class = "btn-primary"),
                       textOutput("selected_var")
-                    )    
+                    )  
            ),
            tabPanel("Hasil Agregasi",
                     h3("Rank Kriteria"),

@@ -5,6 +5,7 @@
 # sumberDaya        1/4         1           1/3            4
 # stakeholder        1          3            1             5
 # dukunganPublik    1/6        1/4          1/5            1
+<<<<<<< HEAD
 
 pairwiseKriteria = rep(1, 16)
 pairwiseSubApproval = rep(1, 9)
@@ -35,6 +36,19 @@ nilaiEigen = function(pairwiseKriteria){
     selisihEig = abs(eigSekarang - eigSebelum)
     eigSebelum = eigSekarang
     # print(eigSekarang)
+=======
+pairwiseKriteria = c(1,1,1,1,1,1,1,1,1)
+jumlahEigen = sqrt(length(pairwiseKriteria))
+matKriteria = matrix(data = pairwiseKriteria, ncol = jumlahEigen, byrow = T)
+eigSebelum = numeric(jumlahEigen)
+selisihEig = rep(1, jumlahEigen)
+matOlah = matKriteria
+while (all(selisihEig > 0.0001)) {
+  eigSekarang = c()
+  matOlah = matOlah %*% matOlah
+  for (j in 1:dim(matOlah)[1]) {
+    eigSekarang[j] = sum(matOlah[j,])/sum(matOlah)
+>>>>>>> d52d939f0ba3e9bfa4f68218bbcaaebdba331fb4
   }
   return(eigSekarang)
 }
