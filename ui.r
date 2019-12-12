@@ -2,8 +2,8 @@ library(shiny)
 library(shinycssloaders)
 library(shinythemes)
 library(shinyWidgets)
+arr <- c("9", "8", "7", "6", "5", "4", "3", "2", "1", "2", "3", "4", "5", "6", "7", "8", "9")
 
-arr = c("9", "8", "7", "6", "5", "4", "3", "2", "1", "2", "3", "4", "5", "6", "7", "8", "9")
 navbarPage("Analytical Hierarchy Process",
            theme = shinytheme("cerulean"),
            tabPanel("Tambah Pakar",
@@ -25,28 +25,11 @@ navbarPage("Analytical Hierarchy Process",
            ),
            tabPanel("Tambah Record",
                     sidebarPanel(
-                      selectInput('comparison', 'Pilih Pakar', levels(responses$namaPakar)),
-                      selectInput('comparison', 'Pilih Perbandingan', perbandingan)
+                      selectInput('selectPakar', 'Pilih Pakar', levels(responses$namaPakar)),
+                      selectInput('selectPerbandingan', 'Pilih Perbandingan', perbandingan)
                     ),
                     mainPanel(
-                      sliderTextInput(
-                        inputId = "slider1",
-                        label = "Kriteria 1 vs Kriteria 2",
-                        choices = arr,
-                        selected = arr[9]
-                      ),
-                      sliderTextInput(
-                        inputId = "slider2",
-                        label = "Kriteria 2 vs Kriteria 3",
-                        choices = arr,
-                        selected = arr[9]
-                      ),
-                      sliderTextInput(
-                        inputId = "slider3",
-                        label = "Kriteria 1 vs Kriteria 3",
-                        choices = arr,
-                        selected = arr[9]
-                      ),
+                      uiOutput("slider_ui"),
                       actionButton("addRecord", "Tambahkan Record", class = "btn-primary"),
                       textOutput("selected_var")
                     )  
