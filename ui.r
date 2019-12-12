@@ -7,6 +7,10 @@ arr = c("9", "8", "7", "6", "5", "4", "3", "2", "1", "2", "3", "4", "5", "6", "7
 navbarPage("Analytical Hierarchy Process",
            theme = shinytheme("cerulean"),
            tabPanel("Tambah Pakar",
+                    HTML('<center><img src="Hirarki.png" width="700" height="265"></center>'),
+                    br(),
+                    br(),
+                    br(),
                     fluidRow(
                       column(4,
                              textInput("namaPakar", "Nama Pakar:"),
@@ -21,8 +25,8 @@ navbarPage("Analytical Hierarchy Process",
            ),
            tabPanel("Tambah Record",
                     sidebarPanel(
-                      selectInput('comparison', 'Pilih Pakar', names(iris)),
-                      selectInput('comparison', 'Pilih Perbandingan', names(iris))
+                      selectInput('comparison', 'Pilih Pakar', levels(responses$namaPakar)),
+                      selectInput('comparison', 'Pilih Perbandingan', perbandingan)
                     ),
                     mainPanel(
                       sliderTextInput(
