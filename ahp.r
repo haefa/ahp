@@ -5,7 +5,7 @@
 # sumberDaya        1/4         1           1/3            4
 # stakeholder        1          3            1             5
 # dukunganPublik    1/6        1/4          1/5            1
-pairwiseKriteria = c(1,1/4,4,1/6,4,1,4,1/4,1/4,1/4,1,1/5,6,4,5,1)
+pairwiseKriteria = c(1,1,1,1,1,1,1,1,1)
 jumlahEigen = sqrt(length(pairwiseKriteria))
 matKriteria = matrix(data = pairwiseKriteria, ncol = jumlahEigen, byrow = T)
 eigSebelum = numeric(jumlahEigen)
