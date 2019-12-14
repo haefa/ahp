@@ -2,3 +2,4 @@ perbandingan <- c("Semua Kriteria", "Kriteria Approval Pemerintah","- Subkriteri
                   "- Subkriteria Teknologi", "- Subkriteria Ahli", "- Subkriteria Finansial",
                   "Kriteria Penolakan Stakeholder", "Kriteria Dukungan Publik"
                   )
+namaPakar <- c()

@@ -2,7 +2,6 @@ library(shiny)
 library(shinycssloaders)
 library(shinythemes)
 library(shinyWidgets)
-arr <- c("9", "8", "7", "6", "5", "4", "3", "2", "1", "2", "3", "4", "5", "6", "7", "8", "9")
 
 navbarPage("Analytical Hierarchy Process",
            theme = shinytheme("cerulean"),
@@ -25,13 +24,13 @@ navbarPage("Analytical Hierarchy Process",
            ),
            tabPanel("Tambah Record",
                     sidebarPanel(
-                      selectInput('selectPakar', 'Pilih Pakar', levels(responses$namaPakar)),
+                      selectInput('selectPakar', 'Pilih Pakar', namaPakar),
                       selectInput('selectPerbandingan', 'Pilih Perbandingan', perbandingan)
                     ),
                     mainPanel(
                       uiOutput("slider_ui"),
                       actionButton("addRecord", "Tambahkan Record", class = "btn-primary"),
-                      textOutput("selected_var")
+                      tableOutput("values")
                     )  
            ),
            tabPanel("Hasil Agregasi",

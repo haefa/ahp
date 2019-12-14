@@ -1,21 +1,31 @@
 fields <- c("namaPakar", "jabatanPakar")
-arr <- c("9", "8", "7", "6", "5", "4", "3", "2", "1", "2", "3", "4", "5", "6", "7", "8", "9")
+arr <- c("1/9", "1/8", "1/7", "1/6", "1/5", "1/4", "1/3", "1/2", "1", "2", "3", "4", "5", "6", "7", "8", "9")
+
+outputDir <- "C:/Users/Eng-Ryan/Documents/Kuliah/ahp"
+filePath <- file.path(outputDir, "expertData.csv")
 
 saveData <- function(data) {
-  data <- as.data.frame(t(data))
-  if (exists("responses")) {
-    responses <<- rbind(responses, data)
-  } else {
-    responses <<- data
-  }
+  data <- t(data)
+  data <- data
+  # Create a unique file name
+  fileName <- "expertData.csv"
+  dir.create(file.path(outputDir), showWarnings = FALSE)
+  # Write the file to the local system
+  
+  write.table(data, filePath, sep = ",", col.names = !file.exists(filePath), append = T)
 }
 
 loadData <- function() {
-  if (exists("responses")) {
+  if (file.exists(filePath)) {
+    responses <- read.csv(filePath, header = T, row.names = NULL )
+    namaPakar <<- levels(responses$namaPakar)
+    namaPakar <<- as.data.frame(namaPakar)
+    namaPakar
+    responses$row.names <- NULL
     responses
   }
+  else responses <- NULL
 }
-
 
 server <- function(input, output) {
   criteria <- NULL
@@ -98,5 +108,23 @@ server <- function(input, output) {
   })
   
   output$slider_ui <- renderUI({ slider() })
+  
+  sliderValues <- reactive({
+    
+    data.frame(
+      Name = c("slider1",
+               "slider2",
+               "slider3"),
+      Value = as.character(c(input$slider1,
+                             input$slider2,
+                             input$slider3)),
+      stringsAsFactors = FALSE)
+    
+  })
+  
+  # Show the values in an HTML table ----
+  output$values <- renderTable({
+    sliderValues()
+  })
   
 }
