@@ -3,6 +3,7 @@ arr <- c("1/9", "1/8", "1/7", "1/6", "1/5", "1/4", "1/3", "1/2", "1", "2", "3", 
 
 outputDir <- "C:/Users/Eng-Ryan/Documents/Kuliah/ahp"
 filePath <- file.path(outputDir, "expertData.csv")
+filePath2 <- file.path(outputDir, "recordData.csv")
 
 saveData <- function(data) {
   data <- t(data)
@@ -15,6 +16,17 @@ saveData <- function(data) {
   write.table(data, filePath, sep = ",", col.names = !file.exists(filePath), append = T)
 }
 
+saveRecord <- function(data){
+  data <- t(data)
+  data <- data
+  # Create a unique file name
+  fileName <- "recordData.csv"
+  dir.create(file.path(outputDir), showWarnings = FALSE)
+  # Write the file to the local system
+  
+  write.table(data, filePath2, sep = ",", col.names = !file.exists(filePath2), append = T)
+}
+
 loadData <- function() {
   if (file.exists(filePath)) {
     responses <- read.csv(filePath, header = T, row.names = NULL )
@@ -25,6 +37,44 @@ loadData <- function() {
     responses
   }
   else responses <- NULL
+}
+
+convertString <- function(x){
+  if(x=="1"){
+    return(1)
+  } else if(x=="2"){
+    return(2)
+  } else if(x=="3"){
+    return(3)
+  } else if(x=="4"){
+    return(4)
+  } else if(x=="5"){
+    return(5)
+  } else if(x=="6"){
+    return(6)
+  } else if(x=="7"){
+    return(7)
+  } else if(x=="8"){
+    return(8)
+  } else if(x=="9"){
+    return(9)
+  } else if(x=="1/2"){
+    return(1/2)
+  } else if(x=="1/3"){
+    return(1/3)
+  } else if(x=="1/4"){
+    return(1/4)
+  } else if(x=="1/5"){
+    return(1/5)
+  } else if(x=="1/6"){
+    return(1/6)
+  } else if(x=="1/7"){
+    return(1/7)
+  } else if(x=="1/8"){
+    return(1/8)
+  } else if(x=="1/9"){
+    return(1/9)
+  }
 }
 
 server <- function(input, output) {
@@ -43,12 +93,18 @@ server <- function(input, output) {
     data
   })
   
-  namaPakar <- reactive(({
-    namaPakar
+  formRecord <- reactive(({
+    data <- c(input$selectPakar, input$selectPerbandingan, input$slider1, input$slider2, input$slider3)
+    #data <- sapply(fields, function(x) input[[x]])
+    data
   }))
   
   observeEvent(input$addPakar, {
     saveData(formData())
+  })
+  
+  observeEvent(input$addRecord, {
+    saveRecord(formRecord())
   })
   
   output$responses <- DT::renderDataTable({
@@ -114,10 +170,16 @@ server <- function(input, output) {
     data.frame(
       Name = c("slider1",
                "slider2",
-               "slider3"),
-      Value = as.character(c(input$slider1,
-                             input$slider2,
-                             input$slider3)),
+               "slider3",
+               "pakar",
+               "perbandingan"
+               ),
+      Value = c(convertString(input$slider1),
+                             convertString(input$slider2),
+                             convertString(input$slider3),
+                             input$selectPakar,
+                             input$selectPerbandingan
+                ),
       stringsAsFactors = FALSE)
     
   })
