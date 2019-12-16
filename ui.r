@@ -12,8 +12,7 @@ navbarPage("Analytical Hierarchy Process",
                     br(),
                     fluidRow(
                       column(4,
-                             textInput("namaPakar", "Nama Pakar:"),
-                             textInput("jabatanPakar", "Jabatan Pakar:"),
+                             
                              actionButton("addPakar", "Tambahkan", class = "btn-primary"),
                              verbatimTextOutput("outputCriteria")
                       ),
@@ -23,13 +22,17 @@ navbarPage("Analytical Hierarchy Process",
                     )   
            ),
            tabPanel("Tambah Record",
+                    p("Isikan semua perbandingan sebelum menekam tombol tambahkan record"),
                     sidebarPanel(
+                      textInput("namaPakar", "Nama Pakar:"),
+                      textInput("jabatanPakar", "Jabatan Pakar:"),
                       selectInput('selectPakar', 'Pilih Pakar', namaPakar),
-                      selectInput('selectPerbandingan', 'Pilih Perbandingan', perbandingan)
+                      selectInput('selectPerbandingan', 'Pilih Perbandingan', perbandingan),
+                      actionButton("addRecord", "Tambahkan Record", class = "btn-primary")
                     ),
                     mainPanel(
                       uiOutput("slider_ui"),
-                      actionButton("addRecord", "Tambahkan Record", class = "btn-primary"),
+                      textOutput("debugPakar"),
                       tableOutput("values")
                     )  
            ),
